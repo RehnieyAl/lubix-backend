@@ -40,9 +40,15 @@ LUBIX-BACKEND/
 |  |
 │  ├─ routers/            # Carpeta con routers de endpoints
 │  |   
-│  ├─ schemas/            # Estructura de entrada y salida de datos en la api      
+│  ├─ schemas/            # Estructura de entrada y salida de datos en la api  
+|  |
+|  ├─ schemas/            # Logica de negocio
 |  |        
 |  └─ utils/              # Utilidades como STMP, generador de codigos
+|
+├─ config,py              # Configuraciones predefinidas importada desde .env
+|
+├─ main.py                # Punto de entrada y ejecucion principal del backend
 ├─ .env                   # Variables de entorno
 ├─ requirements.txt       # Dependencias del proyecto
 ├─ README.md              # Documentación del proyecto
