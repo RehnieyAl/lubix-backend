@@ -18,10 +18,11 @@ Initial version V1.0
 | Uvicorn | Servidor ASGI para correr FastAPI |
 | SQLAlchemy | ORM (Object Relational Mapping) para manejar la base de datos |
 | PostgreSQL 18.3 | Base de datos relacional |
-| psycopg2-binary | Driver para conexión con PostgreSQL |
+| psycopg2-binary | Driver para conexión con PostgreSQL hacia al backend |
 | Pydantic | Validación de datos y esquemas |
 | python-jose | Manejo de autenticación y creacion de tokens JWT |
 | bcrypt | Encriptacion de contraseña |
+| SMTP (smtplib) | Envío de correos electrónicos (verificación, recuperación de contraseña) |
 | python-dotenv | Leer variables de entorno desde archivos `.env` |
 
 ## Estructura de Carpetas
