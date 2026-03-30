@@ -9,6 +9,11 @@ def generate_code(length=6) -> str:
     return ''.join(random.choices('0123456789', k=length))
 
 def create_code_and_send_code(database: Session, user_id: uuid.UUID, email: str, code_type: typeCode):
+    database.query(Codes).filter(
+        Codes.user_id == user_id, 
+        Codes.type == code_type
+    ).delete()
+    
     code = generate_code(6)
     new_code = Codes(
         code=code,
@@ -21,13 +26,12 @@ def create_code_and_send_code(database: Session, user_id: uuid.UUID, email: str,
     database.add(new_code)
     database.commit()
     database.refresh(new_code)
-    send_code_email(email, code)
+    send_code_email(email, code, code_type)
     return {
-        "message":"Código enviado correctamente",
-        "code": code
+        "message":"Código enviado correctamente"
     }
 
-def verify_code(database: Session, user_id: uuid.UUID, code: str, code_type: typeCode) -> bool:
+def verify_code(database: Session, user_id: uuid.UUID, code: str, code_type: typeCode):
     code_entry = database.query(Codes).filter(
         Codes.user_id == user_id,
         Codes.code == code,
@@ -39,4 +43,5 @@ def verify_code(database: Session, user_id: uuid.UUID, code: str, code_type: typ
         database.delete(code_entry)
         database.commit()
         return True
+    
     return False

@@ -1,18 +1,16 @@
-from fastapi import HTTPException,Depends
-from app.database.connection import get_db
+from fastapi import HTTPException
 from app.models.user import Users
 from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword
 from sqlalchemy.orm import Session
 from app.utils.jwt import create_token
 from app.utils.security import hash_password, verify_password
 from app.utils.codes import create_code_and_send_code, verify_code
-from app.utils.security import pwd_context
 
 def register_user_service(user: createUser, database: Session):
     exists_user = database.query(Users).filter(Users.email == user.email).first()
     if exists_user:
         raise HTTPException(status_code=409, detail="usuario esta registrado...")
-    hashed_password = hash_password(user.hashed_password)
+    hashed_password = hash_password(user.password)
     new_user = Users(
         fullName = user.fullName,
         email = user.email,
@@ -40,7 +38,7 @@ def verify_email_service(code: verifyEmail, database: Session):
         code = create_code_and_send_code(database, user.id, user.email, code_type="verifyEmail")
         return {
             "message": "Código de verificación incorrecto o expirado. Se ha enviado un nuevo código a tu correo electrónico.",
-            "code": code,
+            "code": code
         }
     
     user.verified = True
@@ -60,8 +58,11 @@ def login_user_service(user: userLogin, database: Session):
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
     
     if not search_user.verified:
-        raise HTTPException(status_code=400, detail="Correo no verificado. Por favor verifica tu correo electrónico antes de iniciar sesión.")
-    
+        create_code_and_send_code(database, search_user.id, search_user.email, code_type="verifyEmail")
+        return {
+            "message": "Tu correo electrónico no ha sido verificado. Se ha enviado un nuevo código de verificación a tu correo electrónico."
+        }
+        
     token = create_token({
         "sub": str(search_user.id)
     })

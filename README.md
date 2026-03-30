@@ -36,7 +36,7 @@ LUBIX-BACKEND/
 |  |
 │  ├─ docs/               # Documentacion
 |  |
-|  ├─ models/             # Modelos de tablas para la base de datos
+|  ├─ models/             # Modelos de tablas para la base de datos ORM
 |  |
 │  ├─ routers/            # Carpeta con routers de endpoints
 │  |   
@@ -54,7 +54,6 @@ LUBIX-BACKEND/
 ├─ README.md              # Documentación del proyecto
 └─ venv/                  # Entorno virtual de Python
 ```
-## Instalacion de postgresql
 
 ## Instalación
 
@@ -69,18 +68,18 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
     ```bash
     python -m venv venv
     ```
-2. **Activar entorno virutal - usar bash**
+3. **Activar entorno virutal - usar bash**
     ```bash
     linux/macs: source venv/bin/activate
     windows: source venv/Scripts/activate
     ``` 
 
-3. **Instalar dependencias**
+4. **Instalar dependencias**
     ```bash
     pip install -r requirements.txt
     ```
 
-4. **Crear archivo .env afuera de la carpeta app y añadir este codigo**
+5. **Crear archivo .env afuera de la carpeta app y añadir este codigo**
     ```bash
     URL_DATABASE = "postgresql://tu_usuario_en_posgresql:contraseña@localhost:tupuerto/tubasededatos"
     SECRET_KEY=super_clave_secreta
@@ -89,7 +88,7 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
     GMAIL_USERNAME = "tucorreo@gmail.com"
     GMAIL_APP_PASSWORD = "tu_clave_app_gmail"
     ```
-5. **Iniciar servidor backend**
+6. **Iniciar servidor backend afuera de la carpeta app**
     ```bash
     uvicorn app.main:app --reload
     ```
