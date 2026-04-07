@@ -53,4 +53,8 @@ class Users(Base):
     codes: Mapped[list["Codes"]] = relationship(
         back_populates="user"
     )
+
+    event_token: Mapped[list["EventToken"]] = relationship(
+        back_populates="user"
+    )
     

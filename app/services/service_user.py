@@ -71,6 +71,7 @@ def login_user_service(user: userLogin, database: Session):
         "message": "Inicio de sesión exitoso",
         "access_token": token,
         "token_type": "bearer",
+        "Nombre": search_user.fullName,
         "email": search_user.email,
         "role": search_user.role
     }

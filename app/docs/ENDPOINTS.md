@@ -12,7 +12,7 @@ POST user/register
   "fullName": "",
   "email": "",
   "tell": "",
-  "hashed_password": ""
+  "password": ""
 }
 
 vefify account
