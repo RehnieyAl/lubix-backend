@@ -14,6 +14,16 @@ POST user/register
   "tell": "",
   "hashed_password": ""
 }
+
+vefify account
+POST user/verify-email
+{
+  "email": "",
+  "code": ""
+}
+
+export default App
+
 -- login 
 POST user/login
 {
