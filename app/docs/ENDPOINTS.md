@@ -15,7 +15,7 @@ POST user/register
   "password": ""
 }
 
-vefify account
+verify account
 POST user/verify-email
 {
   "email": "",

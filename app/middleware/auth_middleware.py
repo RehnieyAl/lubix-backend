@@ -9,7 +9,8 @@ PUBLIC_ROUTES = [
     "/user/login",
     "/user/register",
     "/user/verify-email",
-    "/health/database",
+    "/user/forgot-password",
+    "/user/reset-password"       
 ]
 
 async def auth_middleware(request: Request, call_next):
