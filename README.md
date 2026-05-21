@@ -61,7 +61,7 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
 
 1. **Clonar el repositorio**  
    ```bash
-        git clone https://github.com/RehnieyAl/lubix-backend.git
+    git clone https://github.com/RehnieyAl/lubix-backend.git
    ```
    
 2. **instalar entorno virtual venv afuera de la carpeta app**
@@ -78,19 +78,13 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
     ```bash
     pip install -r requirements.txt
     ```
-
-5. **Crear archivo .env afuera de la carpeta app y añadir este codigo**
+5. **Crear tablas en la base de datos postgresql**
     ```bash
-    URL_DATABASE = "postgresql://tu_usuario_en_posgresql:contraseña@localhost:tupuerto/tubasededatos"
-    SECRET_KEY=super_clave_secreta
-    ALGORITHM=HS256
-    ACCESS_TOKEN_EXPIRE_MINUTES=30
-    GMAIL_USERNAME = "tucorreo@gmail.com"
-    GMAIL_APP_PASSWORD = "tu_clave_app_gmail"
-    URL_FRONTEND = "tu_urlfrotend"
+    alembic revision --autogenerate -m "lubix-initial"
     ```
+
 6. **Iniciar servidor backend afuera de la carpeta app**
     ```bash
     uvicorn app.main:app --reload
     ```
-## Backend hecho por RehnieyAl
+## Backend hecho por Yeinher algarin

@@ -2,7 +2,6 @@ from pydantic import BaseModel, EmailStr, field_validator
 from app.models.user import RoleType
 from app.models.event_token import TokenType
 import re
-import uuid
 
 class createUser(BaseModel):
     fullName: str
