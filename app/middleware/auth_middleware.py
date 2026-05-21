@@ -1,3 +1,8 @@
+# este codigo es creado para dar acceso a las rutas 
+# esto sin necesitad de token de autenticacion,
+# pero de igual manera se busca validar el token a la hora
+# de proteger las demas rutas dependiendo del rol validando 
+# en la base de datos si aquel token existe y corresponde a el usuario
 from fastapi import Request
 from starlette.responses import JSONResponse
 from app.database.connection import SessionLocal
