@@ -13,9 +13,11 @@ Initial version V1.0
 | Tecnología / Herramienta | Uso |
 |--------------------------|-----|
 | Python 3.14.3 | Lenguaje principal del backend |
+| Alembic | Control de versiones de la base de datos |
+| Docker  |                                          | 
 | venv | Entorno virtual para Python |
 | FastAPI | Framework para APIs (CRUD) |
-| Uvicorn | Servidor ASGI para correr FastAPI |
+| Uvicorn | Servidor para que ejecute FastApi |
 | SQLAlchemy | ORM (Object Relational Mapping) para manejar la base de datos |
 | PostgreSQL 18.3 | Base de datos relacional |
 | psycopg2-binary | Driver para conexión con PostgreSQL hacia al backend |
@@ -76,11 +78,13 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
 
 4. **Instalar dependencias**
     ```bash
-    pip install -r requirements.txt
+    docker compose build
+    docker compose up
     ```
-5. **Crear tablas en la base de datos postgresql**
+5. **Crear tablas en la base de datos postgresql en docker**
     ```bash
-    alembic revision --autogenerate -m "lubix-initial"
+    docker compose exec backend alembic revision --autogenerate -m "initial migration"
+    docker compose exec backend alembic upgrade head
     ```
 
 6. **Iniciar servidor backend afuera de la carpeta app**

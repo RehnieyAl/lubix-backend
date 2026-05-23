@@ -9,10 +9,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from app.database.connection import Base
-from app.models.user import Users
-from app.models.company import Company
-from app.models.codes import Codes
-from app.models.event_token import EventToken
+from app import models
 from app.config import config as settings
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
