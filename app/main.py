@@ -12,7 +12,7 @@ from app.middleware.cors_middleware import setup_cors
 app = FastAPI()
 app.middleware("http")(auth_middleware)
 setup_cors(app)
-##Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 app.include_router(user_routers.router)
 app.include_router(health.router)
 
