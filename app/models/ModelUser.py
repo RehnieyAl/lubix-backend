@@ -1,7 +1,7 @@
 from sqlalchemy import String, Boolean, Enum
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.dialects.postgresql import UUID
-from app.database.connection import Base
+from app.database.Connection import Base
 import uuid
 from enum import Enum as typerEnum
 

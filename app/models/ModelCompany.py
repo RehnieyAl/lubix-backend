@@ -3,7 +3,7 @@ from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-from app.database.connection import Base
+from app.database.Connection import Base
 
 class Company(Base):
     __tablename__ = "company"

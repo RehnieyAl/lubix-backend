@@ -126,3 +126,8 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
     docker compose exec backend uvicorn app.main:app --host 0.0.0.0 --port 8000
     ```
 ## Backend hecho por Yeinher algarin
+
+para detener los puertos usado localmente
+sudo fuser -k 8000/tcp
+sudo fuser -k 5433/tcp
+sudo fuser -k 5432/tcp

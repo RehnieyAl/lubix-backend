@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, field_validator
-from app.models.user import RoleType
-from app.models.event_token import TokenType
+from app.models.ModelUser import RoleType
+from app.models.ModelEventToken import TokenType
 import re
 
 class createUser(BaseModel):
@@ -12,12 +12,18 @@ class createUser(BaseModel):
     isActive: bool = True
     verified: bool = False
 
+    @field_validator('email')
+    def validate_email(cls, v: str):
+        if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', v):
+            raise ValueError('correo electrónico no válido')
+        return v
+    
     @field_validator('fullName')
     def validate_fullName(cls, v: str):
         if len(v) < 3:
             raise ValueError('el nombre completo debe tener al menos 3 caracteres')
         if len(v) > 60:
-            raise ValueError('el nombre completo no debe exceder los 50 caracteres')
+            raise ValueError('el nombre completo no debe exceder los 60 caracteres')
         return v
 
     @field_validator('password')

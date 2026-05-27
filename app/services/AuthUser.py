@@ -1,11 +1,11 @@
 from fastapi import HTTPException
-from app.models.user import Users
-from app.models.event_token import EventToken
-from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
+from app.models.ModelUser import Users
+from app.models.ModelEventToken import EventToken
+from app.schemas.SchemaUser import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
 from sqlalchemy.orm import Session
 from app.utils.jwt import create_token
 from app.utils.security import hash_password, verify_password
-from app.utils.codes import create_code_and_send_code, verify_code
+from app.utils.GenerateCodes import create_code_and_send_code, verify_code
 
 def register_user_service(user: createUser, database: Session):
     exists_user = database.query(Users).filter(Users.email == user.email).first()

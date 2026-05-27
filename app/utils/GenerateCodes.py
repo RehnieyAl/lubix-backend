@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from app.models.codes import Codes, typeCode
+from app.models.ModelCode import Codes, typeCode
 from app.utils.email import send_code_email
 import random
 import uuid

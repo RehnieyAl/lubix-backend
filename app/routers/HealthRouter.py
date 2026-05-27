@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.utils.testDatabase import db_test
-from app.utils.check_internet import check_internet_connection
+from app.utils.CheckNetwork import check_internet_connection
 
 router = APIRouter(
     prefix=("/health"),

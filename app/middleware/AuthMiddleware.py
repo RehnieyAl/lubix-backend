@@ -5,9 +5,9 @@
 # en la base de datos si aquel token existe y corresponde a el usuario
 from fastapi import Request
 from starlette.responses import JSONResponse
-from app.database.connection import SessionLocal
-from app.models.event_token import EventToken
-from app.models.user import Users
+from app.database.Connection import SessionLocal
+from app.models.ModelEventToken import EventToken
+from app.models.ModelUser import Users
 
 
 PUBLIC_ROUTES = [

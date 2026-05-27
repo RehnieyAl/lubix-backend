@@ -1,5 +1,5 @@
 from sqlalchemy import text
-from app.database.connection import engine
+from app.database.Connection import engine
 
 ## Testeo de conexion de base de datos desde el backend
 def db_test():

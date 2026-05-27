@@ -6,7 +6,7 @@
 from sqlalchemy import String, Enum, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime, timedelta
-from app.database.connection import Base
+from app.database.Connection import Base
 from enum import Enum as typerEnum
 from sqlalchemy.dialects.postgresql import UUID
 import uuid

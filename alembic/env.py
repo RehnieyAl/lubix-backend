@@ -8,8 +8,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.database.connection import Base
-from app import models
+from app.database.Connection import Base
+from app.models import *  # Importa todos los modelos para que Alembic pueda detectarlos
 from app.config import config as settings
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
