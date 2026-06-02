@@ -2,8 +2,7 @@ from fastapi import APIRouter,Depends
 from app.services.AuthUser import register_user_service, verify_email_service, login_user_service, forgot_password_service, reset_password_service, logout_user_service
 from sqlalchemy.orm import Session
 from app.database.Connection import get_db
-from app.schemas.SchemaUser import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
-
+from app.schemas.SchemaAuthUser import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
 router = APIRouter(
     prefix=("/user"),   
     tags=["User"]

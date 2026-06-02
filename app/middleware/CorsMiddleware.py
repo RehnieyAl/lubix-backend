@@ -6,7 +6,7 @@
 # bloqueando el acceso a la peticion recibida si el backend
 # no esta autorizado
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import config
+from app.Config import config
 
 def setup_cors(app):
     app.add_middleware(

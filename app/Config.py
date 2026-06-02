@@ -10,4 +10,7 @@ class config():
     GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
     GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
     URL_FRONTEND = os.getenv("URL_FRONTEND")
+    MINIO_ROOT_USER = os.getenv("MINIO_ROOT_USER")
+    MINIO_ROOT_PASSWORD = os.getenv("MINIO_ROOT_PASSWORD")
 config = config()
+

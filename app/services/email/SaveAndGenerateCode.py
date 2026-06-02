@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from app.models.ModelCode import Codes, typeCode
-from app.utils.email import send_code_email
+from app.services.email.template.EmailForgotPassword import EmailForgotPassword
+from app.services.email.template.EmailVerify import EmailVerify
+
 import random
 import uuid
 
@@ -26,7 +28,7 @@ def create_code_and_send_code(database: Session, user_id: uuid.UUID, email: str,
     database.add(new_code)
     database.commit()
     database.refresh(new_code)
-    send_code_email(email, code, code_type)
+    EmailVerify(email, code, code_type)
     return {
         "message":"Código enviado correctamente"
     }

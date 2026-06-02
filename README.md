@@ -131,3 +131,10 @@ para detener los puertos usado localmente
 sudo fuser -k 8000/tcp
 sudo fuser -k 5433/tcp
 sudo fuser -k 5432/tcp
+
+## para eliminar las migraciones antiguas usando sudo en linux
+rm alembic/versions/*.py 
+rm -rf alembic/versions/__pycache__
+
+## ejecuta esto como paquete de app usando -m
+docker compose exec backend python -m app.utils.Nas

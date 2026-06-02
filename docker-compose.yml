@@ -3,6 +3,10 @@ services:
   backend:
     build: .
     container_name: lubix-backend
+ 
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
     ports:
       - "8001:8000"
@@ -19,6 +23,28 @@ services:
     restart: always
 
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  
+  minio:
+    image: minio/minio:latest
+
+    container_name: lubix-minio
+
+    restart: always
+
+    env_file:
+      - .env
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+    ports:
+      - "9000:9000"
+    
+    volumes:
+      - minio_data:/data
+
+    command: server /data
 
   postgres:
     image: postgres:16
@@ -43,3 +69,4 @@ services:
 
 volumes:
   postgres_data:
+  minio_data:

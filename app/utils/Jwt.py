@@ -1,6 +1,6 @@
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
-from app.config import config
+from app.Config import config
 
 SECRET_KEY = config.SECRET_KEY
 ALGORITHM = config.ALGORITHM
