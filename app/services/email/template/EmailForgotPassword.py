@@ -116,5 +116,4 @@ def EmailForgotPassword(to_email: str, code: str, code_type: str):
     </body>
     </html>
     """
-
     return send_email(to_email, subject, body)

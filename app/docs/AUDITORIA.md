@@ -5,7 +5,10 @@ pip-audit es una herramienta desarrollada por Trail of Bits (con apoyo de Google
 ```bash
 curl -LsSf https://astral.sh | sh
 ```
-
+### Creacion de entorno virtual (venv)
+```bash
+uv venv
+```
 ### Instalacion de pip-audit
 ```bash
 uv pip install pip-audit

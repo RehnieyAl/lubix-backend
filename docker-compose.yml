@@ -1,7 +1,10 @@
 services:
 
   backend:
-    build: 
+    build:
+      # Ruta al Dockerfile
+      # El contexto es el directorio actual (donde se encuentra el Dockerfile) del
+      # backend. Asegúrate de que el Dockerfile esté en la raíz del proyecto backend.
       context: .
       dockerfile: Dockerfile
       
@@ -21,6 +24,8 @@ services:
       - postgres
 
     env_file:
+    # Carga las variables de entorno desde el archivo .env
+    # En la raiz del backend
       - .env
 
     restart: always
@@ -35,6 +40,8 @@ services:
     restart: always
 
     env_file:
+    # Carga las variables de entorno desde el archivo .env
+    # En la raiz del backend
       - .env
 
     environment:
@@ -57,6 +64,8 @@ services:
     restart: always
 
     env_file:
+    # Carga las variables de entorno desde el archivo .env
+    # En la raiz del backend
       - .env
 
     environment:
