@@ -1,11 +1,4 @@
-from app.services.email.EmailService import send_email
-
-def EmailVerify(to_email: str, code: str, code_type: str):
-
-    subject = "Verificación de correo"
-
-    body = f"""
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -35,7 +28,7 @@ def EmailVerify(to_email: str, code: str, code_type: str):
                             <td align="center"
                                 style="
                                     background:#007d2a;
-                                    color:#ffffff;
+                                    color:white;
                                     padding:30px;
                                 ">
                                 <h1 style="margin:0;">
@@ -47,7 +40,7 @@ def EmailVerify(to_email: str, code: str, code_type: str):
                         <tr>
                             <td style="padding:30px;">
 
-                                <h2 style= color:#>
+                                <h2>
                                     Verificación de correo
                                 </h2>
 
@@ -67,7 +60,7 @@ def EmailVerify(to_email: str, code: str, code_type: str):
                                     <span style="
                                         display:inline-block;
                                         background:#eef2ff;
-                                        color:#007d2a;
+                                        color:#2563eb;
                                         padding:15px 30px;
                                         font-size:32px;
                                         font-weight:bold;
@@ -115,6 +108,3 @@ def EmailVerify(to_email: str, code: str, code_type: str):
 
     </body>
     </html>
-    """
-
-    return send_email(to_email, subject, body)

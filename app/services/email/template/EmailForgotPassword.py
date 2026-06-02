@@ -34,8 +34,8 @@ def EmailForgotPassword(to_email: str, code: str, code_type: str):
                         <tr>
                             <td align="center"
                                 style="
-                                    background:#2563eb;
-                                    color:white;
+                                    background:#007d2a;
+                                    color:#ffffff;
                                     padding:30px;
                                 ">
                                 <h1 style="margin:0;">
@@ -47,13 +47,13 @@ def EmailForgotPassword(to_email: str, code: str, code_type: str):
                         <tr>
                             <td style="padding:30px;">
 
-                                <h2>
+                                <h2 style= color:#>
                                     Recuperación de contraseña
                                 </h2>
 
                                 <p>
                                     Hemos recibido una solicitud para
-                                    restablecer tu contraseña.
+                                    recuperar tu contraseña.
                                 </p>
 
                                 <p>
@@ -67,7 +67,7 @@ def EmailForgotPassword(to_email: str, code: str, code_type: str):
                                     <span style="
                                         display:inline-block;
                                         background:#eef2ff;
-                                        color:#2563eb;
+                                        color:#007d2a;
                                         padding:15px 30px;
                                         font-size:32px;
                                         font-weight:bold;

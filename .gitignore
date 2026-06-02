@@ -15,3 +15,5 @@ __pycache__/te
 *.db
 *.bak
 .env
+__pycache__/
+soloparami.md
