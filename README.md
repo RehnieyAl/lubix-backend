@@ -59,7 +59,7 @@ Version **1.1**
 LUBIX-BACKEND/
 │
 ├── app/
-│   ├── Config.py
+│   ├── Config.py 
 │   ├── main.py
 │   │
 │   ├── database/

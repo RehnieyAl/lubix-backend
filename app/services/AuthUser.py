@@ -1,3 +1,6 @@
+# Este servicio se encarga de manejar la lógica de autenticación de usuarios, 
+# incluyendo registro, inicio de sesión, verificación de correo electrónico, 
+# recuperación de contraseña y cierre de sesión.
 from fastapi import HTTPException
 from app.models.ModelUser import Users
 from app.models.ModelEventToken import EventToken

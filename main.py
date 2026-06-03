@@ -1,5 +1,5 @@
 def main():
-    print("Hello from better-backend!")
+    print("Hola, Este es el backend de proyecto lubix, desarrolado por yeinher Algarin")
 
 
 if __name__ == "__main__":

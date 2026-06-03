@@ -1,4 +1,5 @@
-
+# Este modelo representa la tabla "company" en la base de datos, 
+# que almacena información sobre las empresas.
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID

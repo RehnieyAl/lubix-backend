@@ -1,3 +1,6 @@
+# Este esquema define los modelos de datos para la autenticación de usuarios,
+# incluyendo la creación de usuarios, verificación de correo electrónico, 
+# inicio de sesión,
 from pydantic import BaseModel, EmailStr, field_validator
 from app.models.ModelUser import RoleType
 from app.models.ModelEventToken import TokenType

@@ -1,3 +1,4 @@
+# Este archivo se encarga de cargar las variables de entorno desde el archivo .env
 from dotenv import load_dotenv
 import os
 load_dotenv()

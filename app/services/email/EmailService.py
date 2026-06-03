@@ -1,3 +1,5 @@
+# Este servicio email se encarga de enviar correos electrónicos
+# utilizando la cuenta de Gmail configurada en las variables de entorno.
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

@@ -1,5 +1,6 @@
-http://127.0.0.1:8000/
 
+```text
+http://127.0.0.1:8000/
 
 para probar conexion de base de datos desde el backend:
 POSTDATA: debe tener previamente postgre sql con usuario, contraseña y base de datos
@@ -44,3 +45,5 @@ POST user/reset-password
   "code": "",
   "new_password":""
 }
+
+```

@@ -1,3 +1,5 @@
+# Este servicio se encarga de generar códigos de verificación o recuperación de contraseña,
+# almacenarlos en la base de datos y enviarlos por correo electrónico al usuario.
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from app.models.ModelCode import Codes, typeCode
@@ -10,6 +12,9 @@ import uuid
 def generate_code(length=6) -> str:
     return ''.join(random.choices('0123456789', k=length))
 
+# Crear un nuevo codigo
+# Eliminar cualquier código existente para 
+# el usuario y tipo de código antes de crear uno nuevo
 def create_code_and_send_code(database: Session, user_id: uuid.UUID, email: str, code_type: typeCode):
     database.query(Codes).filter(
         Codes.user_id == user_id, 
@@ -38,6 +43,8 @@ def create_code_and_send_code(database: Session, user_id: uuid.UUID, email: str,
         "message":"Código enviado correctamente"
     }
 
+# Verificar el código ingresado por el usuario
+# Si el código es correcto, eliminarlo de la base de datos para evitar reutilización
 def verify_code(database: Session, user_id: uuid.UUID, code: str, code_type: typeCode):
     code_entry = database.query(Codes).filter(
         Codes.user_id == user_id,
