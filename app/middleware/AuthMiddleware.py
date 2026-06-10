@@ -11,14 +11,20 @@ from app.models.ModelUser import Users
 
 
 PUBLIC_ROUTES = [
-    "/user/login",
-    "/user/register",
-    "/user/verify-email",
-    "/user/forgot-password",
-    "/user/reset-password"       
+    "/Auth/login-user",
+    "/Auth/login-company",
+    "/Auth/register-user",
+    "/Auth/register-company",
+    "/Auth/verify-email",
+    "/Auth/forgot-password-user",
+    "/Auth/reset-password-user",
+    "/docs",
+    "/openapi.json"
 ]
 
+
 async def auth_middleware(request: Request, call_next):
+    print("PATH:", request.url.path)
     if request.url.path in PUBLIC_ROUTES:
         return await call_next(request)
 

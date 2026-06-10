@@ -13,5 +13,8 @@ class config():
     URL_FRONTEND = os.getenv("URL_FRONTEND")
     MINIO_ROOT_USER = os.getenv("MINIO_ROOT_USER")
     MINIO_ROOT_PASSWORD = os.getenv("MINIO_ROOT_PASSWORD")
+    ADMIN_DEFAULT = os.getenv("ADMIN_DEFAULT")
+    PASSWORD_DEFAULT = os.getenv("PASSWORD_DEFAULT")
+    RUN_SEED = os.getenv("RUN_SEED", "false").lower() == "true"
 config = config()
 

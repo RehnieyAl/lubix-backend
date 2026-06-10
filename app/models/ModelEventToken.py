@@ -34,8 +34,13 @@ class EventToken(Base):
     )
     
     user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("users.id")
+        UUID(as_uuid=True),
+        ForeignKey("users.id"),
+        unique=True,
+        nullable=False
     )
+
     user: Mapped["Users"] = relationship(
+        "Users",
         back_populates="event_token"
     )

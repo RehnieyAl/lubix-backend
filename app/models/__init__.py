@@ -6,3 +6,4 @@ from .ModelCompany import Company
 from .ModelCode import Codes
 from .ModelEventToken import EventToken
 from .ModelUser import Users
+from .ModelRole import Role

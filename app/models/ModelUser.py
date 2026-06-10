@@ -1,16 +1,9 @@
-from sqlalchemy import String, Boolean, Enum
+from sqlalchemy import String, Boolean, Enum, ForeignKey
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.dialects.postgresql import UUID
 from app.database.Connection import Base
 import uuid
 from enum import Enum as typerEnum
-
-class RoleType(str, typerEnum):
-    user = "Usuario",
-    admin = "Administrador"
-    owner = "Lubix INC",
-    company = "Empresa"
-
 class Users(Base):
     __tablename__ = "users"
     id: Mapped[uuid.UUID] = mapped_column(
@@ -30,9 +23,6 @@ class Users(Base):
         String(75), 
         nullable=False
     )
-    role: Mapped[RoleType] = mapped_column(
-        Enum(RoleType, name="role_enum", default=RoleType.user)
-    )
     
     tell: Mapped[str] = mapped_column(
         String(50), nullable=False
@@ -47,14 +37,32 @@ class Users(Base):
         default=True, 
         nullable=False
     )
-    company: Mapped[list["Company"]] = relationship(
-        back_populates="user"
+
+    role_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("roles.id"),
+        nullable=False
     )
-    codes: Mapped[list["Codes"]] = relationship(
+    
+    role: Mapped["Role"] = relationship(
+        "Role",
+        back_populates="users"
+    )
+
+    company: Mapped["Company | None"] = relationship(
+        "Company",
         back_populates="user"
     )
 
-    event_token: Mapped[list["EventToken"]] = relationship(
-        back_populates="user"
+    codes: Mapped[list["Codes"]] = relationship(
+        "Codes",
+        back_populates="user",
+        cascade="all, delete-orphan"
     )
-    
+
+    event_token: Mapped[list["EventToken"]] = relationship(
+        "EventToken",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+

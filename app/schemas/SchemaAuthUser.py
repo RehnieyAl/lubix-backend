@@ -2,7 +2,6 @@
 # incluyendo la creación de usuarios, verificación de correo electrónico, 
 # inicio de sesión,
 from pydantic import BaseModel, EmailStr, field_validator
-from app.models.ModelUser import RoleType
 from app.models.ModelEventToken import TokenType
 import re
 
@@ -10,7 +9,6 @@ class createUser(BaseModel):
     fullName: str
     email: EmailStr
     password: str
-    role: RoleType = RoleType.user
     tell: str
     isActive: bool = True
     verified: bool = False
@@ -94,8 +92,8 @@ class ResetPassword(BaseModel):
     
 class AddToken(BaseModel):
     id: int
-    token: TokenType.access
+    token: TokenType
 
 class DeleteToken(BaseModel):
     id: int
-    token: TokenType.access
+    token: TokenType
