@@ -7,7 +7,7 @@ Backend con base de datos para el proyecto **Lubix**, desarrollado por **Yeinher
 Este proyecto sirve como backend para Lubix, implementando operaciones CRUD y conexión con base de datos PostgreSQL.  
 Incluye autenticación, gestión de usuarios y envío de correos electrónicos utilizando FastAPI, SQLAlchemy y SMTP con Gmail.
 
-Version **1.1**
+Version **1.1.1**
 
 ## Tecnologías y herramientas
 
@@ -58,73 +58,65 @@ Version **1.1**
 ```text
 LUBIX-BACKEND/
 │
-├── app/
-│   ├── Config.py 
-│   ├── main.py
-│   │
-│   ├── database/
-│   │   └── Connection.py
-│   │
-│   ├── docs/
-│   │   ├── AUDITORIA.md
-│   │   └── ENDPOINTS.md
-│   │
-│   ├── middleware/
-│   │   ├── AuthMiddleware.py
-│   │   └── CorsMiddleware.py
-│   │
-│   ├── models/
-│   │   ├── ModelCode.py
-│   │   ├── ModelCompany.py
-│   │   ├── ModelEventToken.py
-│   │   ├── ModelUser.py
-│   │   └── __init__.py
-│   │
-│   ├── routers/
-│   │   ├── HealthRouter.py
-│   │   └── UserRouters.py
-│   │
-│   ├── schemas/
-│   │   ├── SchemaAuthCompany.py
-│   │   └── SchemaAuthUser.py
-│   │
-│   ├── services/
-│   │   ├── AuthUser.py
-│   │   ├── NasService.py
-│   │   │
-│   │   └── email/
-│   │       ├── EmailService.py
-│   │       ├── SaveAndGenerateCode.py
-│   │       │
-│   │       └── template/
-│   │           ├── EmailForgotPassword.py
-│   │           └── EmailVerify.py
-│   │
-│   └── utils/
-│       ├── CheckNetwork.py
-│       ├── Jwt.py
-│       ├── Security.py
-│       └── TestDatabase.py
-│
-├── alembic/
-├── alembic.ini
-├── pyproject.toml
-├── uv.lock
-├── docker-compose.yml
-├── Dockerfile
-├── .env.example
-└── README.md
+├── database
+│      Connection.py
+│   └──
+├── docs
+│   ├── AUDITORIA.md
+│   └── ENDPOINTS.md
+├── middleware
+│   ├── AuthMiddleware.py
+│   └── CorsMiddleware.py
+├── models
+│   ├── __init__.py
+│   ├── ModelCode.py
+│   ├── ModelCompany.py
+│   ├── ModelProduct.py
+│   ├── ModelRefreshToken.py
+│   ├── ModelRole.py
+│   └── ModelUser.py
+├── routers
+│   ├── AuthRouters.py
+│   ├── CardRouters.py
+│   ├── CompanyRouter.py
+│   └── HealthRouter.py
+├── schemas
+│   ├── dashboard
+│   │   └── SchemaCompany.py
+│   ├── SchemaAuthCompany.py
+│   ├── SchemaAuthUser.py
+│   └── SchemaProduct.py
+├── services
+│   ├── authentication
+│   │   ├── AuthService.py
+│   │   └── JWTService.py
+│   ├── CompanyServices
+│   │   ├── Dasboard.py
+│   │   └── Products.py
+│   ├── email
+│   │   ├── EmailService.py
+│   │   ├── SaveAndGenerateCode.py
+│   │   └── template
+│   │       ├── EmailForgotPassword.py
+│   │       ├── EmailRegisterCompany.py
+│   │       ├── EmailRegisterUser.py
+│   │       └── EmailVerify.py
+│   └── NasService.py
+├── utils
+│   ├── CheckNetwork.py
+│   ├── Security.py
+│   ├── Config.py
+│   ├── seed.py
+│   └── TestDatabase.py
+├── Config.py
+└── main.py
 ```
 
 ## Instalación
 
 Sigue estos pasos para ejecutar el proyecto en tu máquina local:
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/RehnieyAl/lubix-backend.git
-cd lubix-backend
-```
+
 ## Instalación sin Docker
 
 Sigue estos pasos para configurar el proyecto en tu máquina local:
@@ -189,6 +181,16 @@ Configurar las variables necesarias para:
 * SMTP
 * MinIO
 
+```text
+!!! IMPORTANTE
+Antes de ejecutar el servidor backend, ingresa en tu .env y activa la Seed
+# Seed
+RUN_SEED=True
+despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed
+# Seed
+RUN_SEED=False
+```
+
 ### 7. Ejecutar migraciones
 
 Si es la primera migración:
@@ -205,6 +207,7 @@ uv run alembic upgrade head
 ```
 
 ### 8. Iniciar servidor backend
+
 
 ```bash
 uv run uvicorn app.main:app --reload
@@ -253,19 +256,38 @@ Windows:
 copy .env.example .env
 ```
 
-### 3. Construir contenedores
+### 3. Configurar variables de entorno
+
+Configurar las variables necesarias para:
+
+* PostgreSQL
+* JWT
+* SMTP
+* MinIO
+
+```text
+!!! IMPORTANTE
+Antes de ejecutar el servidor backend, ingresa en tu .env y activa la Seed
+# Seed
+RUN_SEED=True
+despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed
+# Seed
+RUN_SEED=False
+```
+
+### 4. Construir contenedores
 
 ```bash
 docker compose build
 ```
 
-### 4. Levantar contenedores
+### 5. Levantar contenedores
 
 ```bash
 docker compose up -d
 ```
 
-### 5. Ejecutar migraciones dentro del contenedor
+### 6. Ejecutar migraciones dentro del contenedor
 
 Si es la primera migración:
 
@@ -280,19 +302,19 @@ Si las migraciones ya existen:
 docker compose exec backend uv run alembic upgrade head
 ```
 
-### 6. Verificar contenedores
+### 7. Verificar contenedores
 
 ```bash
 docker compose ps
 ```
 
-### 7. Ver logs del backend
+### 8. Ver logs del backend
 
 ```bash
 docker compose logs -f backend
 ```
 
-### 8. Iniciar servidor manualmente (si es necesario)
+### 9. Iniciar servidor manualmente (si es necesario)
 
 ```bash
 docker compose exec backend uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
