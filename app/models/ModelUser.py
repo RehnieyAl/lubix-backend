@@ -1,9 +1,8 @@
-from sqlalchemy import String, Boolean, Enum, ForeignKey
+from sqlalchemy import String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.dialects.postgresql import UUID
 from app.database.Connection import Base
 import uuid
-from enum import Enum as typerEnum
 class Users(Base):
     __tablename__ = "users"
     id: Mapped[uuid.UUID] = mapped_column(
@@ -17,16 +16,18 @@ class Users(Base):
     )
     email: Mapped[str] = mapped_column(
         String(50), 
-        nullable=False
+        nullable=False,
+        unique=True
     )
     hashed_password: Mapped[str] = mapped_column(
-        String(75), 
+        String(255), 
         nullable=False
     )
     
     tell: Mapped[str] = mapped_column(
         String(50), nullable=False
     )
+    
     verified: Mapped[bool] = mapped_column(
         Boolean,
         default=False
@@ -60,8 +61,8 @@ class Users(Base):
         cascade="all, delete-orphan"
     )
 
-    event_token: Mapped[list["EventToken"]] = relationship(
-        "EventToken",
+    refresh_token: Mapped[list["refreshToken"]] = relationship(
+        "refreshToken",
         back_populates="user",
         cascade="all, delete-orphan"
     )

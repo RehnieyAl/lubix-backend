@@ -54,7 +54,7 @@ class NasService:
         except Exception as e:
             return {"success": False, "message": str(e)}
 
-    def upload_company_certificate(self, file, company_nit: str):
+    def upload_file(self, file, PATH: str):
         try:
             if not file:
                 return None
@@ -62,7 +62,7 @@ class NasService:
             ext = file.filename.split(".")[-1]
 
             object_name = (
-                f"companies/{company_nit}/certificates/"
+                f"{PATH}"
                 f"{uuid.uuid4()}.{ext}"
             )
 

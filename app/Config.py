@@ -8,6 +8,7 @@ class config():
     SECRET_KEY = os.getenv("SECRET_KEY")
     ALGORITHM = os.getenv("ALGORITHM")
     ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+    REFRESH_TOKEN_DAYS = int(os.getenv("REFRESH_TOKEN_DAYS"))
     GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
     GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
     URL_FRONTEND = os.getenv("URL_FRONTEND")

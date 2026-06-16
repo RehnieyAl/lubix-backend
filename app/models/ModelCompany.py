@@ -59,3 +59,9 @@ class Company(Base):
         "Users",
         back_populates="company"
     )
+
+    products: Mapped["Product"] =  relationship(
+        "Product",
+        back_populates="company"
+    )
+

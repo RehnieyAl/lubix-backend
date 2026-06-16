@@ -6,7 +6,7 @@ from app.utils.Security import hash_password
 from app.Config import config
 
 def seed_roles(db: Session):
-    roles = ["USER", "COMPANY", "ADMIN"]
+    roles = ["user", "company", "admin"]
 
     for role_name in roles:
         exists = db.query(Role).filter(Role.name == role_name).first()
@@ -17,7 +17,7 @@ def seed_roles(db: Session):
     db.commit()
 
 def seed_admin(db: Session):
-    admin_role = db.query(Role).filter(Role.name == "ADMIN").first()
+    admin_role = db.query(Role).filter(Role.name == "admin").first()
 
     if not admin_role:
         return
@@ -34,7 +34,9 @@ def seed_admin(db: Session):
             email=admin_email,
             tell="0000000000",
             hashed_password=hash_password(admin_password),
-            role_id=admin_role
+            role_id=admin_role.id,
+            verified = True
+
         )
 
         db.add(admin)
