@@ -4,7 +4,7 @@
 from fastapi import HTTPException
 from datetime import datetime, timedelta
 from app.models.ModelCompany import Company
-from app.models.ModelRefreshToken import refreshToken
+from app.models.ModelRefreshToken import RefreshToken
 from app.models.ModelUser import Users
 from app.models.ModelRole import Role
 from app.schemas.SchemaAuthUser import (
@@ -12,9 +12,11 @@ from app.schemas.SchemaAuthUser import (
     verifyEmail, 
     userLogin, 
     forgotPassword, 
-    ResetPassword
+    ResetPassword,
+    TokenResponse,
+    RefreshRequest
 )
-from .JWTService import create_access_token, create_refresh_token
+from app.services.authentication.JWTService import create_access_token, create_refresh_token, verify_token
 from app.schemas.SchemaAuthCompany import createCompany, LoginCompany
 from sqlalchemy.orm import Session
 from app.utils.Security import hash_password, verify_password
@@ -22,8 +24,9 @@ from app.services.email.SaveAndGenerateCode import create_code_and_send_code, ve
 from app.services.email.template.EmailRegisterCompany import EmailRegisterCompany
 
 def register_user_service(user: createUser, database: Session):
-    user_role = database.query(Role).filter(Role.name == "USER").first()
+    user_role = database.query(Role).filter(Role.name == "user").first()
     exists_user = database.query(Users).filter(Users.email == user.email).first()
+
     if exists_user:
         raise HTTPException(status_code=409, detail="correo en uso")
     
@@ -137,11 +140,12 @@ def verify_email_service(code: verifyEmail, database: Session):
 
 def login_user_service(user: userLogin, database: Session):
     search_user = database.query(Users).filter(Users.email == user.email).first()
+
     if not search_user:
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
     
     if not verify_password(user.password, search_user.hashed_password):
-        raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
+        raise HTTPException(status_code=400, detail="contraseña incorrectos")
     
     if not search_user.verified:
         create_code_and_send_code(database, search_user.id, search_user.email, code_type="verifyEmail")
@@ -150,35 +154,21 @@ def login_user_service(user: userLogin, database: Session):
         }
         
     access_token = create_access_token(
-        str(search_user.id),
-        str(search_user.role_id)
+        user_id=str(search_user.id),
+        role=str(search_user.role.name)
     )
 
 
     refresh_token = create_refresh_token(
-        str(search_user.id)
+        user_id=str(search_user.id)
     )
     
-    db_refresh = refreshToken(
-        token=refresh_token,
-        user_id=search_user.id,
-        revoked=False,
-        expires_at=datetime.utcnow() + timedelta(days=15)
+    print(search_user.id)
+    print(search_user.role.name)
+    return TokenResponse(
+        access_token=access_token,
+        refresh_token=refresh_token
     )
-
-    database.add(db_refresh)
-    database.commit()
-
-    return {
-        "message": "Inicio de sesión exitoso",
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-        "token_type": "bearer",
-        "id": search_user.id,
-        "Nombre": search_user.fullName,
-        "email": search_user.email,
-        "role": search_user.role_id
-    }
 
 def login_company_service(company: LoginCompany, database: Session):
     search_company = database.query(Users).join(Company, Users.id == Company.user_id).filter(Company.CompanyNIT == company.companyNIT).first()
@@ -187,7 +177,7 @@ def login_company_service(company: LoginCompany, database: Session):
         raise HTTPException(status_code=400, detail="NIT o contraseña incorrectos")
     
     if not verify_password(company.companyPassword, search_company.hashed_password):
-        raise HTTPException(status_code=400, detail="NIT o contraseña incorrectos")
+        raise HTTPException(status_code=400, detail="contraseña incorrectos")
     
     access_token = create_access_token(
         user_id=str(search_company.id),
@@ -198,31 +188,17 @@ def login_company_service(company: LoginCompany, database: Session):
         user_id=str(search_company.id)
     )
 
-    db_refresh = refreshToken(
-        token=refresh_token,
-        user_id=search_company.id,
-        revoked=False,
-        expires_at=datetime.utcnow() + timedelta(days=15)
+    return TokenResponse(
+        access_token=access_token,
+        refresh_token=refresh_token
     )
-    
-    database.add(db_refresh)
-    database.commit()
-
-    return {
-        "message": "Inicio de sesión exitoso",
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-        "token_type": "bearer",
-        "id": search_company.id,
-        "email": search_company.email,
-        "role": search_company.role_id
-    }
 
 def forgot_password_service(user: forgotPassword, database: Session):
     search_user = database.query(Users).filter(Users.email == user.email).first()
     if not search_user:
         raise HTTPException(status_code=400, detail="Correo no registrado")
     create_code_and_send_code(database, search_user.id, user.email, code_type="resetPassword")
+
     return {
         "message": "se ha enviado un código de recuperación de contraseña a tu correo electrónico."
     }
@@ -241,4 +217,51 @@ def reset_password_service(user: ResetPassword, database: Session):
     
     return {
         "message": "Contraseña restablecida correctamente"
+    }
+
+
+def refresh_token_service(data: RefreshRequest, database: Session):
+    
+    print("accediendo al refresh")
+    print("token refresh:",data.old_refresh_token)
+
+    payload = verify_token(data.old_refresh_token)
+
+    id_user = payload["sub"]
+
+    if payload["type"] != "refresh":
+        raise HTTPException(status_code=401, detail="Token incorrecto")
+    
+    search_user = (database.query(Users, Role).join(Role, Users.role_id == Role.id).filter(Users.id == id_user).first())
+
+    if not search_user:
+        raise HTTPException(status_code=401, detail="Usuario no encontrado...")
+    
+    user, role = search_user
+
+    #Pruebas para join...
+    print("id_user: ",user.id)
+    print("id_role: ", user.role_id)
+    print("nombre: ", user.fullName)
+    print("ID_tole: ", role.id)
+    print("Empresa: ", role.name)
+
+    new_access_token = create_access_token(
+        user_id=str(user.id),
+        role=str(role.id)
+    )
+
+    new_refresh_token = create_refresh_token(
+        user_id=str(user.id)
+    )
+
+    return TokenResponse(
+        access_token=new_access_token,
+        refresh_token=new_refresh_token
+    )
+
+def logout_service():
+    
+    return{
+        "messaje":"Session cerrada satifactoriamente..."
     }

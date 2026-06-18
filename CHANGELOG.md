@@ -3,6 +3,10 @@
 
 Todos los cambios importantes de este proyecto serán documentados en este archivo.
 
+
+## [1.1.1b] - 2026-06-18
+- Implementacion de logica de dashboard de comprador y vendedor
+
 ## [1.1.1] - 2026-06-16
 
 ### Added

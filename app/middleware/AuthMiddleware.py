@@ -7,15 +7,16 @@ from fastapi import Request
 from starlette.responses import JSONResponse
 from app.services.authentication.JWTService import verify_token
 
-
 PUBLIC_ROUTES = [
-    "/Auth/login-user",
-    "/Auth/login-company",
-    "/Auth/register-user",
-    "/Auth/register-company",
-    "/Auth/verify-email",
-    "/Auth/forgot-password-user",
-    "/Auth/reset-password-user",
+    "/auth/login-user",
+    "/auth/login-company",
+    "/auth/register-user",
+    "/auth/register-company",
+    "/auth/verify-email-user",
+    "/auth/forgot-password-user",
+    "/auth/reset-password-user",
+    "/auth/refresh",
+    "/auth/logout",
     "/docs",
     "/openapi.json"
 ]
@@ -23,17 +24,17 @@ PUBLIC_ROUTES = [
 ROLES_PERMISSIONS_ROUTERS = {
 
     "admin": [
-        "/",
+        "",
         "/"
     ],
 
     "company": [
-        "/Company",
-        "/"
+        "/company/me",
+        ""
     ],
 
     "user": [
-        "/",
+        "",
         "/"
     ]
     
@@ -63,6 +64,9 @@ async def auth_middleware(request: Request, call_next):
             return JSONResponse(status_code=401, content={"detail": "Formato de autorizacion invalido"})
         
         payload =verify_token(token)
+
+        if not isinstance(payload, dict):
+            return JSONResponse(status_code=401, content={"detail": "invalid_token"})
 
         print("DECODE RESULT:", payload)
 

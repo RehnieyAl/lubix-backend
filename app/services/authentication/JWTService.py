@@ -1,4 +1,4 @@
-from jose import jwt, JWTError
+from jose import jwt, JWTError, ExpiredSignatureError
 from datetime import datetime, timedelta
 from app.Config import config
 
@@ -37,8 +37,9 @@ def create_refresh_token(user_id: str):
     )
 
 def verify_token(token: str):
-
+    
     try:
+        print("Prueba token: ",token)
         payload = jwt.decode(
             token,
             SECRET_KEY,
@@ -46,6 +47,11 @@ def verify_token(token: str):
         )
 
         return payload
-
-    except JWTError:
+    
+    except ExpiredSignatureError:
+        print("TOKEN EXPIRADO")
+        return "expired"
+    
+    except JWTError as e:
+        print("ERROR: ", str(e))
         return None

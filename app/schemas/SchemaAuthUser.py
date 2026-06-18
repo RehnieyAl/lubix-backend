@@ -88,3 +88,11 @@ class ResetPassword(BaseModel):
         if not re.search(r'[0-9]', v):
             raise ValueError('la contraseña debe contener al menos un número')
         return v
+
+class TokenResponse(BaseModel):
+    access_token:str
+    refresh_token: str
+    token_type: str = "bearer"
+
+class RefreshRequest(BaseModel):
+    old_refresh_token: str

@@ -7,7 +7,7 @@ Backend con base de datos para el proyecto **Lubix**, desarrollado por **Yeinher
 Este proyecto sirve como backend para Lubix, implementando operaciones CRUD y conexión con base de datos PostgreSQL.  
 Incluye autenticación, gestión de usuarios y envío de correos electrónicos utilizando FastAPI, SQLAlchemy y SMTP con Gmail.
 
-Version **1.1.1**
+Version **1.1.1b**
 
 ## Tecnologías y herramientas
 
@@ -112,124 +112,7 @@ LUBIX-BACKEND/
 └── main.py
 ```
 
-## Instalación
-
-Sigue estos pasos para ejecutar el proyecto en tu máquina local:
-
-
-## Instalación sin Docker
-
-Sigue estos pasos para configurar el proyecto en tu máquina local:
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/RehnieyAl/lubix-backend.git
-cd lubix-backend
-```
-
-### 2. Crear entorno virtual con UV
-
-```bash
-uv venv
-```
-
-### 3. Activar entorno virtual
-
-Linux/macOS:
-
-```bash
-source .venv/bin/activate
-```
-
-Windows:
-
-```powershell
-.venv\Scripts\activate
-```
-
-### 4. Instalar dependencias
-
-```bash
-uv sync
-```
-
-### 5. Crear variable de entorno .env con .env.example
-
-```text
-Crear archivo .env basado en .env.example
-```
-
-Linux/macOS:
-
-```bash
-cp .env.example .env
-```
-
-Windows:
-
-```powershell
-copy .env.example .env
-```
-
-### 6. Configurar variables de entorno
-
-Configurar las variables necesarias para:
-
-* PostgreSQL
-* JWT
-* SMTP
-* MinIO
-
-```text
-!!! IMPORTANTE
-Antes de ejecutar el servidor backend, ingresa en tu .env y activa la Seed
-# Seed
-RUN_SEED=True
-despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed
-# Seed
-RUN_SEED=False
-```
-
-### 7. Ejecutar migraciones
-
-Si es la primera migración:
-
-```bash
-uv run alembic revision --autogenerate -m "Initial migration"
-uv run alembic upgrade head
-```
-
-Si las migraciones ya existen:
-
-```bash
-uv run alembic upgrade head
-```
-
-### 8. Iniciar servidor backend
-
-
-```bash
-uv run uvicorn app.main:app --reload
-```
-
-### 9. Acceder a la documentación
-
-Swagger:
-
-```text
-http://localhost:8000/docs
-```
-
-ReDoc:
-
-```text
-http://localhost:8000/redoc
-```
-
----
-
-## Instalación con Docker
+## Docker
 
 ### 1. Clonar el repositorio
 
@@ -267,7 +150,7 @@ Configurar las variables necesarias para:
 
 ```text
 !!! IMPORTANTE
-Antes de ejecutar el servidor backend, ingresa en tu .env y activa la Seed
+Antes de ejecutar el servidor backend, edita en tu .env y activa la Seed
 # Seed
 RUN_SEED=True
 despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed
@@ -317,6 +200,11 @@ docker compose logs -f backend
 ### 9. Iniciar servidor manualmente (si es necesario)
 
 ```bash
-docker compose exec backend uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
+docker compose exec backend uv run uvicorn app.main:app --host 0.0.0.0 --port 8001
+```
+
+### 9. Si necesitas saber de los endpoints ingresa al siguiente enlace
+```text
+http://127.0.0.1:8001/docs
 ```
 

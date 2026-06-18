@@ -5,7 +5,7 @@ from app.database.Connection import Base
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
-class refreshToken(Base):
+class RefreshToken(Base):
     __tablename__ = "refreshToken"
     id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, default=uuid.uuid4
