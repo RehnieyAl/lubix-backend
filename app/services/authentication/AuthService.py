@@ -167,7 +167,8 @@ def login_user_service(user: userLogin, database: Session):
     print(search_user.role.name)
     return TokenResponse(
         access_token=access_token,
-        refresh_token=refresh_token
+        refresh_token=refresh_token,
+        role=search_user.role.name
     )
 
 def login_company_service(company: LoginCompany, database: Session):
@@ -190,7 +191,8 @@ def login_company_service(company: LoginCompany, database: Session):
 
     return TokenResponse(
         access_token=access_token,
-        refresh_token=refresh_token
+        refresh_token=refresh_token,
+        role=search_company.role.name
     )
 
 def forgot_password_service(user: forgotPassword, database: Session):
