@@ -9,37 +9,56 @@ from app.database.Connection import SessionLocal
 from app.models.ModelEventToken import EventToken
 from app.models.ModelUser import Users
 
-
 PUBLIC_ROUTES = [
     "/Auth/login-user",
     "/Auth/login-company",
     "/Auth/register-user",
     "/Auth/register-company",
-    "/Auth/verify-email",
+    "/Auth/verify-email-user",
     "/Auth/forgot-password-user",
     "/Auth/reset-password-user",
+    "/Auth/test-email",
     "/docs",
-    "/openapi.json"
+    "/openapi.json",
+    "/favicon.ico"
 ]
-
 
 async def auth_middleware(request: Request, call_next):
     print("PATH:", request.url.path)
+
+    # rutas públicas
     if request.url.path in PUBLIC_ROUTES:
         return await call_next(request)
 
     token = request.headers.get("Authorization")
+
     if not token:
-        return JSONResponse(status_code=401, content={"detalle": "Token de autenticación requerido"})
+        return JSONResponse(
+            status_code=401,
+            content={"detalle": "Token de autenticación requerido"}
+        )
 
     db = SessionLocal()
-    event_token = db.query(EventToken).filter(EventToken.token == token).first()
-    if not event_token:
-        return JSONResponse(status_code=401, content={"detalle": "token invalido"})
 
-    user = db.query(Users).filter(Users.id == event_token.user_id).first()
+    event_token = db.query(EventToken).filter(
+        EventToken.token == token
+    ).first()
+
+    if not event_token:
+        return JSONResponse(
+            status_code=401,
+            content={"detalle": "token invalido"}
+        )
+
+    user = db.query(Users).filter(
+        Users.id == event_token.user_id
+    ).first()
+
     if not user:
-        return JSONResponse(status_code=401, content={"detalle": "Usuario no encontrado"})
+        return JSONResponse(
+            status_code=401,
+            content={"detalle": "Usuario no encontrado"}
+        )
 
     request.state.user = user
     response = await call_next(request)

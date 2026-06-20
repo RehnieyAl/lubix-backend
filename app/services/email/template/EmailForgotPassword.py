@@ -1,194 +1,212 @@
 from app.services.email.EmailService import send_email
 
+
 def EmailForgotPassword(to_email: str, code: str):
 
-    subject = "Recuperación de contraseña"
+    subject = "Recuperación de contraseña - Lubix"
 
     body = f"""
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Recuperación de contraseña</title>
-    </head>
+<!DOCTYPE html>
+<html lang="es">
 
-    <body style="
-        margin:0;
-        padding:0;
-        background-color:#f4f4f4;
-        font-family:Arial,sans-serif;
-    ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperación de contraseña</title>
+</head>
 
-        <table width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-                <td align="center" style="padding:40px 0;">
+<body style="
+    margin:0;
+    padding:0;
+    background:#0b0f19;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#ffffff;
+">
 
-                    <table width="600" cellpadding="0" cellspacing="0"
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center" style="padding:50px 20px;">
+
+            <table width="650" cellpadding="0" cellspacing="0"
+                style="
+                    background:#111827;
+                    border-radius:18px;
+                    overflow:hidden;
+                    box-shadow:0 15px 50px rgba(0,0,0,0.6);
+                    border:1px solid #1f2937;
+                ">
+
+                <!-- HEADER -->
+                <tr>
+                    <td align="center"
                         style="
-                            background:#ffffff;
-                            border-radius:12px;
-                            overflow:hidden;
-                            border:1px solid #e5e7eb;
+                            background:linear-gradient(135deg,#0f172a,#1e3a8a,#065f46);
+                            padding:60px 40px;
                         ">
 
-                        <!-- Header -->
-                        <tr>
-                            <td align="center"
-                                style="
-                                    background:#00E65A;
-                                    color:#0f172a;
-                                    padding:30px;
-                                ">
-                                <h1 style="margin:0;">
-                                    Lubix
-                                </h1>
-                            </td>
-                        </tr>
+                        <h1 style="
+                            margin:0;
+                            font-size:44px;
+                            letter-spacing:2px;
+                            color:#ffffff;
+                        ">
+                            Lubix
+                        </h1>
 
-                        <!-- Content -->
-                        <tr>
-                            <td style="padding:30px;">
+                        <p style="
+                            margin-top:12px;
+                            color:#cbd5e1;
+                            font-size:15px;
+                        ">
+                            Recuperación segura de cuenta
+                        </p>
 
-                                <h2 style="
-                                    margin-top:0;
-                                    color:#111827;
-                                ">
-                                    Recuperación de contraseña
-                                </h2>
+                    </td>
+                </tr>
 
-                                <p style="
-                                    color:#4b5563;
-                                    line-height:1.7;
-                                ">
-                                    Hemos recibido una solicitud para restablecer la
-                                    contraseña de tu cuenta en <strong>Lubix</strong>.
-                                </p>
+                <!-- CONTENT -->
+                <tr>
+                    <td style="padding:45px;">
 
-                                <p style="
-                                    color:#4b5563;
-                                    line-height:1.7;
-                                ">
-                                    Utiliza el siguiente código para continuar:
-                                </p>
+                        <h2 style="
+                            text-align:center;
+                            color:#ffffff;
+                            font-size:28px;
+                            margin-bottom:15px;
+                        ">
+                            ¿Olvidaste tu contraseña?
+                        </h2>
 
-                                <!-- Recovery Code -->
-                                <table width="100%" cellpadding="0" cellspacing="0"
-                                    style="
-                                        background:#f9fafb;
-                                        border:1px solid #e5e7eb;
-                                        border-radius:8px;
-                                        margin:25px 0;
-                                    ">
-                                    <tr>
-                                        <td align="center" style="padding:30px;">
+                        <p style="
+                            text-align:center;
+                            color:#cbd5e1;
+                            font-size:16px;
+                            line-height:1.8;
+                        ">
+                            Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Lubix.
+                        </p>
 
-                                            <span style="
-                                                display:inline-block;
-                                                color:#00E65A;
-                                                font-size:40px;
-                                                font-weight:bold;
-                                                letter-spacing:10px;
-                                                font-family:monospace;
-                                            ">
-                                                {code}
-                                            </span>
+                        <p style="
+                            text-align:center;
+                            color:#94a3b8;
+                            font-size:14px;
+                            line-height:1.8;
+                        ">
+                            Utiliza el siguiente código para continuar con el proceso:
+                        </p>
 
-                                        </td>
-                                    </tr>
-                                </table>
+                        <!-- CODIGO -->
+                        <div style="
+                            margin-top:30px;
+                            background:#0f172a;
+                            border:2px solid #1e3a8a;
+                            border-radius:14px;
+                            padding:30px;
+                            text-align:center;
+                        ">
 
-                                <!-- Information -->
-                                <table width="100%" cellpadding="0" cellspacing="0"
-                                    style="
-                                        background:#f9fafb;
-                                        border:1px solid #e5e7eb;
-                                        border-radius:8px;
-                                        margin:20px 0;
-                                    ">
-                                    <tr>
-                                        <td style="padding:20px;">
+                            <span style="
+                                font-size:48px;
+                                font-weight:bold;
+                                color:#38bdf8;
+                                letter-spacing:12px;
+                                font-family:monospace;
+                            ">
+                                {code}
+                            </span>
 
-                                            <p style="
-                                                margin:0 0 10px 0;
-                                                color:#374151;
-                                            ">
-                                                <strong>Proceso:</strong>
-                                                Recuperación de contraseña
-                                            </p>
+                        </div>
 
-                                            <p style="
-                                                margin:0;
-                                                color:#374151;
-                                            ">
-                                                <strong>Expira en:</strong>
-                                                10 minutos
-                                            </p>
+                        <!-- INFO -->
+                        <div style="
+                            margin-top:30px;
+                            padding:18px;
+                            background:#082f49;
+                            border-left:5px solid #38bdf8;
+                            border-radius:10px;
+                        ">
 
-                                        </td>
-                                    </tr>
-                                </table>
+                            <p style="
+                                margin:0;
+                                color:#7dd3fc;
+                                font-weight:bold;
+                            ">
+                                ⏳ Código temporal
+                            </p>
 
-                                <!-- Security Notice -->
-                                <table width="100%" cellpadding="0" cellspacing="0"
-                                    style="
-                                        background:#fff7ed;
-                                        border:1px solid #fed7aa;
-                                        border-radius:8px;
-                                        margin:20px 0;
-                                    ">
-                                    <tr>
-                                        <td style="padding:20px;">
+                            <p style="
+                                margin-top:8px;
+                                color:#bae6fd;
+                                font-size:14px;
+                            ">
+                                Este código expirará en 10 minutos.
+                            </p>
 
-                                            <p style="
-                                                margin:0;
-                                                color:#b45309;
-                                                font-weight:bold;
-                                            ">
-                                                Aviso de seguridad
-                                            </p>
+                        </div>
 
-                                            <p style="
-                                                margin-top:10px;
-                                                color:#92400e;
-                                                line-height:1.6;
-                                            ">
-                                                Nunca compartas este código con terceros.
-                                                Si no solicitaste recuperar tu contraseña,
-                                                puedes ignorar este correo de forma segura.
-                                            </p>
+                        <!-- SEGURIDAD -->
+                        <div style="
+                            margin-top:25px;
+                            padding:18px;
+                            background:#052e1b;
+                            border-left:5px solid #22c55e;
+                            border-radius:10px;
+                        ">
 
-                                        </td>
-                                    </tr>
-                                </table>
+                            <p style="
+                                margin:0;
+                                color:#22c55e;
+                                font-weight:bold;
+                            ">
+                                ⚠ Recomendaciones de seguridad
+                            </p>
 
-                            </td>
-                        </tr>
+                            <p style="
+                                margin-top:8px;
+                                color:#86efac;
+                                font-size:14px;
+                                line-height:1.7;
+                            ">
+                                No compartas este código con nadie.
+                                Lubix nunca solicitará este código por teléfono.
+                                Si no realizaste esta solicitud puedes ignorar este correo.
+                            </p>
 
-                        <!-- Footer -->
-                        <tr>
-                            <td align="center"
-                                style="
-                                    background:#f9fafb;
-                                    color:#6b7280;
-                                    padding:20px;
-                                    font-size:12px;
-                                ">
-                                © 2026 Lubix. Todos los derechos reservados.
-                                <br>
-                                Este es un mensaje automático, por favor no respondas este correo.
-                            </td>
-                        </tr>
+                        </div>
 
-                    </table>
+                        <p style="
+                            text-align:center;
+                            margin-top:35px;
+                            color:#64748b;
+                            font-size:13px;
+                        ">
+                            Gracias por confiar en Lubix.
+                        </p>
 
-                </td>
-            </tr>
-        </table>
+                    </td>
+                </tr>
 
-    </body>
-    </html>
-    """
+                <!-- FOOTER -->
+                <tr>
+                    <td align="center"
+                        style="
+                            background:#0b0f19;
+                            padding:25px;
+                            font-size:12px;
+                            color:#475569;
+                        ">
+                        © 2026 Lubix — Todos los derechos reservados
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+"""
 
     return send_email(to_email, subject, body)
-
