@@ -29,8 +29,9 @@ ROLES_PERMISSIONS_ROUTERS = {
     ],
 
     "company": [
-        "/company/me",
-        ""
+        "/company/dashboard/me",
+        "/company/dashboard/my-profile",
+        "/company/dashboard/upgrade-my-profile"
     ],
 
     "user": [
@@ -66,7 +67,9 @@ async def auth_middleware(request: Request, call_next):
         payload =verify_token(token)
 
         if not isinstance(payload, dict):
-            return JSONResponse(status_code=401, content={"detail": "invalid_token"})
+            response = JSONResponse(status_code=401, content={"detail": "Token invalido"})
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            return response
 
         print("DECODE RESULT:", payload)
 

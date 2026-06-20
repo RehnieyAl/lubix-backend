@@ -1,8 +1,10 @@
-from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy import String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.dialects.postgresql import UUID
 from app.database.Connection import Base
 import uuid
+
+from datetime import datetime
 class Users(Base):
     __tablename__ = "users"
     id: Mapped[uuid.UUID] = mapped_column(
@@ -37,6 +39,11 @@ class Users(Base):
         Boolean, 
         default=True, 
         nullable=False
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow    
     )
 
     role_id: Mapped[uuid.UUID] = mapped_column(

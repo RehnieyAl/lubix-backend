@@ -1,7 +1,7 @@
 # Este router se encarga de manejar las rutas relacionadas 
 # con la autenticación de usuarios, incluyendo registro, inicio de sesión,
 # verificación de correo electrónico, recuperación de contraseña y cierre de sesión.
-from fastapi import APIRouter,Depends, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter,Depends, UploadFile, File, Form, requests
 from app.services.authentication.AuthService import (
     register_user_service,
     register_company_service,
@@ -79,17 +79,22 @@ def verify_email(code: verifyEmail, database: Session = Depends(get_db)):
 
 @router.post("/login-user")
 def login_user(user: userLogin, database: Session = Depends(get_db)):
-     
+    
+   
+    
     return login_user_service(user, database)
 
 @router.post("/login-company")
-def login_company(company: LoginCompany, database: Session = Depends(get_db)):
+def login_company(company: LoginCompany,database: Session = Depends(get_db)):
+
+    print("NIT ", company.companyNIT)
+    print("NIT ", company.companyPassword)
 
     return login_company_service(company, database)
 
 @router.post("/forgot-password-user")
 def forgot_password(user: forgotPassword, database: Session = Depends(get_db)):
-    
+
     return forgot_password_service(user, database)
 
 @router.post("/reset-password-user")

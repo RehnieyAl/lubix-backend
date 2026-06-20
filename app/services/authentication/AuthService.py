@@ -2,9 +2,7 @@
 # incluyendo registro, inicio de sesión, verificación de correo electrónico, 
 # recuperación de contraseña y cierre de sesión.
 from fastapi import HTTPException
-from datetime import datetime, timedelta
 from app.models.ModelCompany import Company
-from app.models.ModelRefreshToken import RefreshToken
 from app.models.ModelUser import Users
 from app.models.ModelRole import Role
 from app.schemas.SchemaAuthUser import (
@@ -223,34 +221,25 @@ def reset_password_service(user: ResetPassword, database: Session):
 
 
 def refresh_token_service(data: RefreshRequest, database: Session):
-    
-    print("accediendo al refresh")
-    print("token refresh:",data.old_refresh_token)
 
     payload = verify_token(data.old_refresh_token)
-
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=401,detail="Refresh token inválido o expirado")
+    
     id_user = payload["sub"]
 
     if payload["type"] != "refresh":
         raise HTTPException(status_code=401, detail="Token incorrecto")
     
-    search_user = (database.query(Users, Role).join(Role, Users.role_id == Role.id).filter(Users.id == id_user).first())
+    user = database.query(Users).filter(Users.id == id_user).first()
 
-    if not search_user:
+    if not user:
         raise HTTPException(status_code=401, detail="Usuario no encontrado...")
     
-    user, role = search_user
-
-    #Pruebas para join...
-    print("id_user: ",user.id)
-    print("id_role: ", user.role_id)
-    print("nombre: ", user.fullName)
-    print("ID_tole: ", role.id)
-    print("Empresa: ", role.name)
 
     new_access_token = create_access_token(
         user_id=str(user.id),
-        role=str(role.id)
+        role=str(user.role.name)
     )
 
     new_refresh_token = create_refresh_token(
@@ -259,7 +248,9 @@ def refresh_token_service(data: RefreshRequest, database: Session):
 
     return TokenResponse(
         access_token=new_access_token,
-        refresh_token=new_refresh_token
+        refresh_token=new_refresh_token,
+        role=user.role.name
+
     )
 
 def logout_service():
