@@ -17,8 +17,10 @@ PUBLIC_ROUTES = [
     "/auth/reset-password-user",
     "/auth/refresh",
     "/auth/logout",
+    "/media/proxy",
     "/docs",
-    "/openapi.json"
+    "/openapi.json",
+    "/media/proxy"
 ]
 
 ROLES_PERMISSIONS_ROUTERS = {
@@ -31,7 +33,10 @@ ROLES_PERMISSIONS_ROUTERS = {
     "company": [
         "/company/dashboard/me",
         "/company/dashboard/my-profile",
-        "/company/dashboard/upgrade-my-profile"
+        "/company/dashboard/upgrade-my-profile",
+        "/company/dashboard/patch-media-logo-banner",
+        "/company/dashboard/product",
+        "/company/dashboard/get-my-products"
     ],
 
     "user": [
