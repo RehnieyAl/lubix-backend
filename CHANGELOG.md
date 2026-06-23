@@ -3,6 +3,18 @@
 
 Todos los cambios importantes de este proyecto serán documentados en este archivo.
 
+## [1.1.2] - 2026-06-19
+- Se añadio mas endpoint para empresa que son
+    - `GET  "/company/dashboard/me"`
+    - `PATCH "/company/dashboard/my-profile"`
+    - `PATCH "/company/dashboard/upgrade-my-profile"`
+    - `PUT "/company/dashboard/product"`
+    -  `pendiente`
+            - `PATCH"/company/dashboard/update-my-product/"`
+    -   `pendiente`
+            - `Dasboard de usuario`
+            - `Dashboard de administrador`
+
 
 ## [1.1.1b] - 2026-06-18
 - Implementacion de logica de dashboard de comprador y vendedor

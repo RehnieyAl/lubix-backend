@@ -7,7 +7,7 @@ Backend con base de datos para el proyecto **Lubix**, desarrollado por **Yeinher
 Este proyecto sirve como backend para Lubix, implementando operaciones CRUD y conexión con base de datos PostgreSQL.  
 Incluye autenticación, gestión de usuarios y envío de correos electrónicos utilizando FastAPI, SQLAlchemy y SMTP con Gmail.
 
-Version **1.1.1b**
+Version **1.1.2**
 
 ## Tecnologías y herramientas
 
@@ -148,16 +148,6 @@ Configurar las variables necesarias para:
 * SMTP
 * MinIO
 
-```text
-!!! IMPORTANTE
-Antes de ejecutar el servidor backend, edita en tu .env y activa la Seed
-# Seed
-RUN_SEED=True
-despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed
-# Seed
-RUN_SEED=False
-```
-
 ### 4. Construir contenedores
 
 ```bash
@@ -179,10 +169,24 @@ docker compose exec backend uv run alembic revision --autogenerate -m "Initial m
 docker compose exec backend uv run alembic upgrade head
 ```
 
+
 Si las migraciones ya existen:
 
 ```bash
 docker compose exec backend uv run alembic upgrade head
+```
+
+### IMPORTANTE
+```text
+!!! IMPORTANTE
+despues de ejecutar el servidor backend, edita en tu .env y activa la Seed
+para implementar un usuario que es admi, los roles y la categoria de producto
+# Seed
+RUN_SEED=True
+despues apaga el servidor, vuelve ingresar en tu .env y desactiva la Seed,
+# Seed
+RUN_SEED=False
+despues enciende tu servidor y todo debe estar biens
 ```
 
 ### 7. Verificar contenedores
