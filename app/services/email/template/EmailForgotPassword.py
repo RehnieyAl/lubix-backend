@@ -1,6 +1,6 @@
 from app.services.email.EmailService import send_email
 
-def EmailForgotPassword(to_email: str, code: str):
+def EmailForgotPassword(to_email: str, code: str, code_type):
 
     subject = "Recuperación de contraseña"
 

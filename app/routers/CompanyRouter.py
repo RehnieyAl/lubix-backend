@@ -113,10 +113,45 @@ def get_my_product(
         database=database
     )
 
-@router.put("/dashboard/update-my-product/{product_id}")
-def upgrade_my_product(request: Request, database: Session = Depends(get_db)):
+@router.patch("/dashboard/update-my-product/{idProduct}")
+def upgrade_my_product(
+    request: Request,
+    idProduct: UUID,
+    nameProduct: str = Form (None), 
+    nameCatalog: str = Form(None),
+    priceProduct: float = Form(None),
+    discountEnable: bool = Form(None),
+    discountValue: int = Form(None),
+    stockProduct: int = Form(None),
+    descripcionProduct: str = Form(None),
+    technicalSpecProduct: str = Form(None),
+    imagesProduct: list[UploadFile] = File(None),
+    imagesToDeleted: list[str] | None = Form(None),
+    nas: NasService = Depends(get_nas_service),
+    database:Session = Depends(get_db)
     
-    return update_product_service()
+    ):
+    
+    user_id = request.state.user_id
+
+    print("Accediento al update point")
+
+    return update_product_service(
+        user_id=user_id,
+        idProduct=idProduct,
+        nameProduct=nameProduct, 
+        nameCatalog=nameCatalog,
+        priceProduct=priceProduct,
+        discountEnable=discountEnable,
+        discountValue=discountValue,
+        stockProduct=stockProduct,
+        descripcionProduct=descripcionProduct,
+        technicalSpecProduct=technicalSpecProduct,
+        imagesProduct=imagesProduct,
+        imagesToDeleted=imagesToDeleted,
+        nas=nas,
+        database=database
+    )
 
 @router.delete("/dashboard/delete-my-product/{product_id}")
 def delete_my_product(request: Request, database: Session = Depends(get_db)):
